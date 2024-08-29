@@ -1,0 +1,36 @@
+﻿@using TelephoneCompanyApp.Domain.Enums
+@using TelephoneCompanyApp.Mvc.Services.Abonents.Dto
+@using TelephoneCompanyApp.Mvc.ViewModels.Home
+@model HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Scripts {
+    <script src="~/js/views/home/index.js"></script>
+}
+
+<h1 class="mb-5">Абоненты телефонной компании</h1>
+
+<div class="mt-3 justify-content-between align-items-center">
+    <button type="button" class="btn btn-outline-primary" data-bs-target="#SearchModal" data-bs-toggle="modal">Поиск <i class="fa-solid fa-magnifying-glass ms-2"></i></button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">
+        Обновить таблицу
+        <i class="fa-solid fa-rotate-right ms-2"></i>
+    </a>
+    <form asp-controller="Home" asp-action="LoadCsv" method="post" class="d-inline mx-2">
+        <button type="submit" class="btn btn-outline-primary">Выгрузить CSV <i class="fa-solid fa-file-csv ms-2"></i></button>
+    </form>
+    <button type="button" class="btn btn-outline-primary" data-bs-target="#StreetsServed" data-bs-toggle="modal">Улицы <i class="fa-solid fa-street-view ms-2"></i></button>
+
+    <button type="button" class="btn btn-outline-primary float-end" data-bs-target="#AddModal" data-bs-toggle="modal">Добавить абонента<i class="fa-solid fa-address-book ms-2"></i></button>
+</div>
+<div id="AbonentsTableWrapper">
+    @await Html.PartialAsync("_AbonentsTable", Model.Abonents)
+</div>
+
+
+@await Html.PartialAsync("_SearchModal")
+@await Html.PartialAsync("_AddModal")
+@await Html.PartialAsync("_StreetsServedModal", Model.Streets)

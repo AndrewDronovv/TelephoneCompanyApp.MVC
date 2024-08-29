@@ -1,0 +1,39 @@
+﻿@using TelephoneCompanyApp.Mvc.Services.Streets.Dto
+@model IEnumerable<StreetDto>
+
+<div class="modal" tabindex="-1" id="StreetsServed">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Обслуживаемые улицы</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Улица</th>
+                        <th scope="col">Количество абонентов</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    @{
+                        int i = 1;
+                        foreach (var street in Model)
+                        {
+                            <tr>
+                                <th scope="row">@(i++)</th>
+                                <td>@street.Name</td>
+                                <td>@street.AbonentsQuantity</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Выйти</button>
+            </div>
+        </div>
+    </div>
+</div>

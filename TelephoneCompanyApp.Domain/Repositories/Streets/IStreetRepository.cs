@@ -6,5 +6,6 @@ namespace TelephoneCompanyApp.Domain.Repositories.Streets
     {
         IEnumerable<Street> GetAll();
         void Add(Street street);
+        int? GetStreetIdOrDefault(string name);
     }
 }

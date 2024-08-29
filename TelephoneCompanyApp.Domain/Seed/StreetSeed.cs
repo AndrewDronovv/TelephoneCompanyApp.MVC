@@ -13,13 +13,11 @@ namespace TelephoneCompanyApp.Domain.Seed
 
         public override void Initialize()
         {
-            var streetNames = new string[] {"Pushkinskaya", "Kashtanovaya", "Leninskaya" };
+            var streetNames = new string[] {"Пушкинская", "Каштановая", "Ленинская" };
             foreach (var streetName in streetNames)
             {
                 _streetRepository.Add(new Street(streetName));
             }
-
-            var streets = _streetRepository.GetAll();
         }
     }
 }

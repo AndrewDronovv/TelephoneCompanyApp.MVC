@@ -1,0 +1,58 @@
+﻿@using TelephoneCompanyApp.Domain.Enums
+@using TelephoneCompanyApp.Mvc.Services.Abonents.Dto
+@model IEnumerable<AbonentDto>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ФИО абонента</th>
+            <th scope="col">Улица</th>
+            <th scope="col">Номер дома</th>
+            <th scope="col">Номер телефона (домашний)</th>
+            <th scope="col">Номер телефона (рабочий)</th>
+            <th scope="col">Номер телефона (мобильный)</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            string GetPhone(AbonentDto input, Telephone type)
+            {
+                var phone = input.Phones.FirstOrDefault(p => p.Telephone == type)?.Phone;
+                return phone ?? string.Empty;
+            };
+
+            int i = 1;
+            foreach (var abonent in Model)
+            {
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@abonent.FullName</td>
+                    <td>@abonent.Address.Name</td>
+                    <td>@abonent.Address.BuildingNumber</td>
+                    <td>@GetPhone(abonent, Telephone.Home) </td>
+                    <td>@GetPhone(abonent, Telephone.Work)</td>
+                    <td>@GetPhone(abonent, Telephone.Cell) </td>
+                    <td class="text-center">
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-route-id="@abonent.Id" asp-action="" class="btn btn-primary mx-1">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            @*<a asp-route-id="@abonent.Id" asp-controller="Home" asp-action="Delete" class="btn btn-danger mx-1">
+                    <i class="far fa-trash-alt"></i>
+                    </a>*@
+                            <form asp-controller="Home" asp-action="Delete" method="post">
+                                <input type="text" value="@abonent.Id" hidden name="id" />
+                                <button type="submit" class="btn btn-danger mx-1">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                i++;
+            }
+        }
+    </tbody>
+</table>

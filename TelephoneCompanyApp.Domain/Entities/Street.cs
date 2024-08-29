@@ -11,5 +11,9 @@ namespace TelephoneCompanyApp.Domain.Entities
         {
             Name = name;
         }
+        public Street()
+        {
+            
+        }
     }
 }

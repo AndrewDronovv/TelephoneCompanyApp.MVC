@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
 using TelephoneCompanyApp.Domain.Entities;
 
@@ -16,24 +15,29 @@ namespace TelephoneCompanyApp.Domain.Repositories.Streets
 
         private void InitializeDataBase()
         {
-            using (var transaction = _db.BeginTransaction())
-            {
-                _db.Execute($@"
-            Create Table if not exists {Street.TABLE_NAME} (
-            {nameof(Street.Id)} integer primary key,
-            {nameof(Street.Name)} text)");
-                transaction.Commit();
-            }
+            _db.Execute($@"
+                CREATE TABLE IF NOT EXISTS {Street.TABLE_NAME} (
+                {nameof(Street.Id)} INTEGER PRIMARY KEY,
+                {nameof(Street.Name)} NVARCHAR(100))");
         }
+
         public IEnumerable<Street> GetAll()
         {
-            return _db.Query<Street>($"select * from {Street.TABLE_NAME}");
+            return _db.Query<Street>($"SELECT * FROM {Street.TABLE_NAME}");
         }
 
         public void Add(Street street)
         {
             //_db.Execute($@"Insert into {Street.TABLE_NAME} ({nameof(Street.Name)}) values ({street.Name})");
-            _db.Execute($@"Insert into {Street.TABLE_NAME} ({nameof(Street.Name)}) values (@Name)", street);
+            _db.Execute($@"INSERT INTO {Street.TABLE_NAME} ({nameof(Street.Name)}) VALUES (@Name)", street);
+        }
+
+        public int? GetStreetIdOrDefault(string name)
+        {
+            return _db.QueryFirstOrDefault<int?>(@$"
+                SELECT {nameof(Street.Id)} 
+                FROM {Street.TABLE_NAME} 
+                WHERE {nameof(Street.Name)}='{name}' LIMIT 1");
         }
     }
 }

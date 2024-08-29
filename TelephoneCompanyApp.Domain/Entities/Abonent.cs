@@ -8,6 +8,17 @@ namespace TelephoneCompanyApp.Domain.Entities
         public string Name { get; set; }
         public string LastName { get; set; }
         public string? MiddleName { get; set; }
-        public string FullName => $"{Name} {LastName} {MiddleName}";
+        public string FullName => $"{LastName} {Name} {MiddleName}";
+
+        public Abonent(string name, string lastName, string? middleName)
+        {
+            LastName = lastName;
+            Name = name;
+            MiddleName = middleName;
+        }
+        public Abonent()
+        {
+
+        }
     }
 }

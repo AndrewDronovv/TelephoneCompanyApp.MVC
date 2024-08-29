@@ -4,6 +4,10 @@ namespace TelephoneCompanyApp.Domain.Repositories.Abonents
 {
     public interface IAbonentRepository
     {
-        IEnumerable<Abonent> GetAll(string? phoneNumber);
+        IEnumerable<Abonent> GetAll();
+        void Add(Abonent abonent);
+        int? GetIdOrDefault(string fio);
+        Abonent GetById(int id);
+        void Delete(int id);
     }
 }
